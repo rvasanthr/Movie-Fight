@@ -3,6 +3,11 @@ const fetchData = async (searchTerm) => {
     const response = await axios.get('http://www.omdbapi.com/', {
         params: { apikey: 'd9835cc5', s: searchTerm }
     });
+    // Handling No Movie Found Scenario
+    if (response.data.Error) {
+        // Return empty array so that no data is displayed, as per our intent
+        return [];
+    }
     return response.data.Search;
 }
 // Dom access for input text
