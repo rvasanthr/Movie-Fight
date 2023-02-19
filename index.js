@@ -1,23 +1,26 @@
+// Helper Functions
+// Debounce function factory
+const debounce = (func, delay = 1000) => {
+    let timeoutID;
+    return (...params) => {
+        // Prevents repetitive function trigger
+        if (timeoutID) { clearTimeout(timeoutID); }
+        // Triggers Fn after delay if Fn washn't triggered before delay expiry
+        timeoutID = setTimeout(() => { func.apply(null, params); }, delay)
+    }
+}
+// Program Logic
 const fetchData = async (searchTerm) => {
     const response = await axios.get('http://www.omdbapi.com/', {
         params: { apikey: 'd9835cc5', s: searchTerm }
     });
     console.log(response.data);
 }
-// Invoke Function
-// fetchData();
 // Dom access for input text
 const search = document.querySelector('input');
-let timerID = undefined;
 // Search Management Function
 const searchApiFn = event => {
-    // Repetitive API trigger prevention
-    if (timerID) {
-        clearTimeout(timerID);
-    }
-    // Triggers API in 1 second if no other input event is triggered
-    timerID = setTimeout(() => {
-        fetchData(search.value);
-    }, 500);
+    fetchData(search.value);
 }
-search.addEventListener('input', searchApiFn);
+// Event Listener for search input
+search.addEventListener('input', debounce(searchApiFn, 500));
