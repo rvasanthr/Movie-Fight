@@ -20,7 +20,7 @@ const fetchData = async (searchTerm) => {
 const search = document.querySelector('input');
 // Search Management Function
 const searchApiFn = event => {
-    fetchData(search.value);
+    fetchData(event.target.value);
 }
 // Event Listener for search input
 search.addEventListener('input', debounce(searchApiFn, 500));
