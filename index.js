@@ -8,6 +8,16 @@ const fetchData = async (searchTerm) => {
 // fetchData();
 // Dom access for input text
 const search = document.querySelector('input');
-search.addEventListener('input', (event) => {
-    fetchData(search.value);
-});
+let timerID = undefined;
+// Search Management Function
+const searchApiFn = event => {
+    // Repetitive API trigger prevention
+    if (timerID) {
+        clearTimeout(timerID);
+    }
+    // Triggers API in 1 second if no other input event is triggered
+    timerID = setTimeout(() => {
+        fetchData(search.value);
+    }, 500);
+}
+search.addEventListener('input', searchApiFn);
