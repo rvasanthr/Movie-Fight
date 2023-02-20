@@ -46,5 +46,14 @@ const searchAPIFn = async (event) => {
         resultsWrapper.appendChild(movieOption);
     }
 }
-// Event Listener for search input
+// Event Listeners
+// For search input
 search.addEventListener('input', debounce(searchAPIFn, 500));
+// For body
+document.addEventListener('click', event => {
+    // console.log(event.target);
+    if (!root.contains(event.target)) {
+        // Bulma class that stops display of drowdown
+        dropdown.classList.remove('is-active');
+    }
+});
