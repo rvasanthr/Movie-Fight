@@ -27,16 +27,18 @@ const dropdown = document.querySelector('.dropdown');
 const resultsWrapper = document.querySelector('.results');
 // Dom object for input text
 const search = document.querySelector('input');
-// Temporary Dom object
-const target = document.querySelector('#target');
 // Search Management Function
 const searchApiFn = async (event) => {
     const apiData = await fetchData(event.target.value);
-    // console.log(apiData);
+    // Bulma class that actively displays the drowdown
+    dropdown.classList.add('is-active');
     for (let movie of apiData) {
-        const div = document.createElement('div');
-        div.innerHTML = `<img src="${movie.Poster}"><br><h1>${movie.Title}</h1>`;
-        target.appendChild(div);
+        const movieOption = document.createElement('a');
+        // Bulma class addition
+        movieOption.classList.add('dropdown-item');
+        movieOption.innerHTML = `
+        <img src="${movie.Poster}">${movie.Title}`;
+        resultsWrapper.appendChild(movieOption);
     }
 }
 // Event Listener for search input
