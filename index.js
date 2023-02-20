@@ -50,6 +50,13 @@ const searchAPIFn = async (event) => {
         movieOption.classList.add('dropdown-item');
         movieOption.innerHTML = `
         <img src="${imageURL}">${movie.Title}`;
+        // Event listener trigger on a element
+        movieOption.addEventListener('click', event => {
+            // Hide dropdown
+            dropdown.classList.remove('is-active');
+            // Get Movie title on to the search box
+            search.value = movie.Title;
+        });
         resultsWrapper.appendChild(movieOption);
     }
 }
