@@ -30,6 +30,8 @@ const search = document.querySelector('input');
 // Search Management Function
 const searchApiFn = async (event) => {
     const apiData = await fetchData(event.target.value);
+    // Reset resultsWrapper with each new search
+    resultsWrapper.innerHTML = ``;
     // Bulma class that actively displays the drowdown
     dropdown.classList.add('is-active');
     for (let movie of apiData) {
