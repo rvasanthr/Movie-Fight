@@ -28,20 +28,23 @@ const resultsWrapper = document.querySelector('.results');
 // Dom object for input text
 const search = document.querySelector('input');
 // Search Management Function
-const searchApiFn = async (event) => {
+const searchAPIFn = async (event) => {
     const apiData = await fetchData(event.target.value);
     // Reset resultsWrapper with each new search
     resultsWrapper.innerHTML = ``;
     // Bulma class that actively displays the drowdown
     dropdown.classList.add('is-active');
     for (let movie of apiData) {
+        // Check for N/A (no image) in poster URI and remedies it
+        const imageURL = movie.Poster === 'N/A' ? '' : movie.Poster;
+        // Bulma display element for this dropdown
         const movieOption = document.createElement('a');
         // Bulma class addition
         movieOption.classList.add('dropdown-item');
         movieOption.innerHTML = `
-        <img src="${movie.Poster}">${movie.Title}`;
+        <img src="${imageURL}">${movie.Title}`;
         resultsWrapper.appendChild(movieOption);
     }
 }
 // Event Listener for search input
-search.addEventListener('input', debounce(searchApiFn, 500));
+search.addEventListener('input', debounce(searchAPIFn, 500));
