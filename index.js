@@ -10,9 +10,24 @@ const fetchData = async (searchTerm) => {
     }
     return response.data.Search;
 }
-// Dom access for input text
+// Dom object for root access
+const root = document.querySelector('.autocomplete');
+// HTML for root
+root.innerHTML = `
+    <label><b>Search For a Movie</b></label>
+    <input class="input">
+    <div class="dropdown">
+        <div class="dropdown-menu">
+            <div class="dropdown-content results"></div>
+        </div>
+    </div>`;
+// Dom objects for access of conjoured up html at root
+const dropdown = document.querySelector('.dropdown');
+// Will be uased to wrap the results of search
+const resultsWrapper = document.querySelector('.results');
+// Dom object for input text
 const search = document.querySelector('input');
-// Temporary dom access
+// Temporary Dom object
 const target = document.querySelector('#target');
 // Search Management Function
 const searchApiFn = async (event) => {
