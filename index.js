@@ -56,6 +56,8 @@ const searchAPIFn = async (event) => {
             dropdown.classList.remove('is-active');
             // Get Movie title on to the search box
             search.value = movie.Title;
+            // Pass movieID to helper Fn for getting movie details
+            movieInfo(movie.imdbID)
         });
         resultsWrapper.appendChild(movieOption);
     }
@@ -71,3 +73,10 @@ document.addEventListener('click', event => {
         dropdown.classList.remove('is-active');
     }
 });
+// Helper Fn for getting movie details
+const movieInfo = async (movieID) => {
+    const response = await axios.get('http://www.omdbapi.com/', {
+        params: { apikey: 'd9835cc5', i: movieID }
+    });
+    console.log(response.data);
+}
