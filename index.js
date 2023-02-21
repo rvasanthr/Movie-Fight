@@ -17,6 +17,10 @@ createAutoComplete({
         // Checks for N/A (no image) in poster URI and remedies it
         const imageURL = movie.Poster === 'N/A' ? '' : movie.Poster;
         return `<img src="${imageURL}">${movie.Title} (${movie.Year})`;
+    },
+    onOptionSelect: (movie) => {
+        // Passes IMDB movieID to helper Fn for getting movie details
+        onMovieSelect(movie.imdbID);
     }
 });
 // Helper Fn for retrieving the selected movie's details

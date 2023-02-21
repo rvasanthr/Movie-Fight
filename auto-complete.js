@@ -1,4 +1,4 @@
-const createAutoComplete = ({ root, renderOption }) => {
+const createAutoComplete = ({ root, renderOption, onOptionSelect }) => {
     // HTML for root
     root.innerHTML = `
     <label><b>Search For a Movie</b></label>
@@ -37,12 +37,12 @@ const createAutoComplete = ({ root, renderOption }) => {
             movieOption.innerHTML = renderOption(movie);
             // Event listener trigger on a element
             movieOption.addEventListener('click', event => {
-                // Hide dropdown
+                // Hide dropdown when user clicks on an option
                 dropdown.classList.remove('is-active');
                 // Get Movie title on to the search box
                 search.value = movie.Title;
-                // Pass movieID to helper Fn for getting movie details
-                onMovieSelect(movie.imdbID)
+                // Pass movie object to Fn handling Option select action
+                onOptionSelect(movie);
             });
             resultsWrapper.appendChild(movieOption);
         }
