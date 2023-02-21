@@ -97,5 +97,25 @@ const movieInfoTemplate = movieInfo => {
                 <p>${movieInfo.Plot}</p>
             </div>
         </div>
+    </article>
+    <article class="notification is-primary">
+        <p class="title">${movieInfo.Awards}</p>
+        <p class="subtitle">Awards</p>
+    </article>
+    <article class="notification is-primary">
+        <p class="title">${movieInfo.BoxOffice}</p>
+        <p class="subtitle">Box Office</p>
+    </article>
+    <article class="notification is-primary">
+        <p class="title">${movieInfo.Metascore}</p>
+        <p class="subtitle">Metascore</p>
+    </article>
+    </article><article class="notification is-primary">
+        <p class="title">${movieInfo.imdbRating}</p>
+        <p class="subtitle">IMDB Rating</p>
+    </article>
+    </article><article class="notification is-primary">
+        <p class="title">${movieInfo.imdbVotes}</p>
+        <p class="subtitle">IMDB Votes</p>
     </article>`;
 }
