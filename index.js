@@ -73,10 +73,29 @@ document.addEventListener('click', event => {
         dropdown.classList.remove('is-active');
     }
 });
-// Helper Fn for getting movie details
+// Helper Fn for retrieving the selected movie's details
 const onMovieSelect = async (movieID) => {
     const response = await axios.get('http://www.omdbapi.com/', {
         params: { apikey: 'd9835cc5', i: movieID }
     });
-    console.log(response.data);
+    // console.log(response.data);
+    document.querySelector('#summary').innerHTML = movieInfoTemplate(response.data);
+}
+// Helper Fn for rendering the selected movie's details
+const movieInfoTemplate = movieInfo => {
+    return `
+    <article class="media">
+        <figure class="media-left">
+            <p class="image">
+                <img src="${movieInfo.Poster}" alt="">
+            </p>
+        </figure>
+        <div class="media-content">
+            <div class="content">
+                <h1>${movieInfo.Title}</h1>
+                <h4>${movieInfo.Genre}</h4>
+                <p>${movieInfo.Plot}</p>
+            </div>
+        </div>
+    </article>`;
 }
