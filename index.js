@@ -57,7 +57,7 @@ const searchAPIFn = async (event) => {
             // Get Movie title on to the search box
             search.value = movie.Title;
             // Pass movieID to helper Fn for getting movie details
-            movieInfo(movie.imdbID)
+            onMovieSelect(movie.imdbID)
         });
         resultsWrapper.appendChild(movieOption);
     }
@@ -74,7 +74,7 @@ document.addEventListener('click', event => {
     }
 });
 // Helper Fn for getting movie details
-const movieInfo = async (movieID) => {
+const onMovieSelect = async (movieID) => {
     const response = await axios.get('http://www.omdbapi.com/', {
         params: { apikey: 'd9835cc5', i: movieID }
     });
