@@ -11,7 +11,14 @@ const fetchAPIData = async (searchTerm) => {
     return response.data.Search;
 }
 // Invoking Auto Complete
-createAutoComplete({ root: document.querySelector('#auto-complete') });
+createAutoComplete({
+    root: document.querySelector('#auto-complete'),
+    renderOption: (movie) => {
+        // Checks for N/A (no image) in poster URI and remedies it
+        const imageURL = movie.Poster === 'N/A' ? '' : movie.Poster;
+        return `<img src="${imageURL}">${movie.Title} (${movie.Year})`;
+    }
+});
 // Helper Fn for retrieving the selected movie's details
 const onMovieSelect = async (movieID) => {
     const response = await axios.get('http://www.omdbapi.com/', {

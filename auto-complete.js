@@ -1,4 +1,4 @@
-const createAutoComplete = ({ root }) => {
+const createAutoComplete = ({ root, renderOption }) => {
     // HTML for root
     root.innerHTML = `
     <label><b>Search For a Movie</b></label>
@@ -28,14 +28,13 @@ const createAutoComplete = ({ root }) => {
         }
         // Bulma class that actively displays the drowdown
         dropdown.classList.add('is-active');
+        // Rendering section
         for (let movie of apiData) {
-            // Check for N/A (no image) in poster URI and remedies it
-            const imageURL = movie.Poster === 'N/A' ? '' : movie.Poster;
             // Bulma display element for this dropdown
             const movieOption = document.createElement('a');
             // Bulma class addition
             movieOption.classList.add('dropdown-item');
-            movieOption.innerHTML = `<img src="${imageURL}">${movie.Title}`;
+            movieOption.innerHTML = renderOption(movie);
             // Event listener trigger on a element
             movieOption.addEventListener('click', event => {
                 // Hide dropdown
