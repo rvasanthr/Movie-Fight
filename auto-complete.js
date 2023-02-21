@@ -15,8 +15,8 @@ const createAutoComplete = ({ root }) => {
     // Dom object for input text
     const search = root.querySelector('input');
     // Search Management Function
-    const searchAPIFn = async (event) => {
-        const apiData = await fetchData(event.target.value);
+    const processAPISearch = async (event) => {
+        const apiData = await fetchAPIData(event.target.value);
         // Reset resultsWrapper with each new search
         resultsWrapper.innerHTML = ``;
         // If there are no movies returned, hide dropdown and exit function
@@ -35,8 +35,7 @@ const createAutoComplete = ({ root }) => {
             const movieOption = document.createElement('a');
             // Bulma class addition
             movieOption.classList.add('dropdown-item');
-            movieOption.innerHTML = `
-        <img src="${imageURL}">${movie.Title}`;
+            movieOption.innerHTML = `<img src="${imageURL}">${movie.Title}`;
             // Event listener trigger on a element
             movieOption.addEventListener('click', event => {
                 // Hide dropdown
@@ -51,7 +50,7 @@ const createAutoComplete = ({ root }) => {
     }
     // Event Listeners
     // For search input
-    search.addEventListener('input', debounce(searchAPIFn, 500));
+    search.addEventListener('input', debounce(processAPISearch, 500));
     // For body
     document.addEventListener('click', event => {
         // console.log(event.target);
