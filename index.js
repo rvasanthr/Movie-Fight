@@ -36,13 +36,29 @@ const movieInfoTemplate = movieInfo => {
         <p class="subtitle">IMDB Votes</p>
     </article>`;
 }
+// Helper Fn for Movie Data Comparison
+const runComparison = () => {
+    console.log('Actual comparison code goes here.');
+}
 // Helper Fn for retrieving the selected movie's details
-const onMovieSelect = async (movieID, summaryElement) => {
+// Variables to represent two sides for storing movie info for comparing
+let leftMovieInfo, rightMovieInfo;
+const onMovieSelect = async (movieID, summaryElement, side) => {
     const response = await axios.get('http://www.omdbapi.com/', {
         params: { apikey: 'd9835cc5', i: movieID }
     });
-    // console.log(response.data);
     summaryElement.innerHTML = movieInfoTemplate(response.data);
+    // Check current side and store data
+    if (side === 'left') {
+        leftMovieInfo = response.data;
+    } else {
+        rightMovieInfo = response.data;
+    }
+    // If both side variables exist, then compare
+    if (leftMovieInfo && rightMovieInfo) {
+        // console.log('Helper fn deploy and compare!');
+        runComparison();
+    }
 }
 // Auto Complete Config
 const autoCompleteConfig = {
@@ -76,7 +92,7 @@ createAutoComplete({
         // Hide the tutorial section
         document.querySelector('.tutorial').classList.add('is-hidden');
         // Passes IMDB movieID to helper Fn for getting movie details
-        onMovieSelect(movie.imdbID, document.querySelector('#left-summary'));
+        onMovieSelect(movie.imdbID, document.querySelector('#left-summary'), 'left');
     }
 });
 // Right search
@@ -87,6 +103,6 @@ createAutoComplete({
         // Hide the tutorial section
         document.querySelector('.tutorial').classList.add('is-hidden');
         // Passes IMDB movieID to helper Fn for getting movie details
-        onMovieSelect(movie.imdbID, document.querySelector('#right-summary'));
+        onMovieSelect(movie.imdbID, document.querySelector('#right-summary'), 'right');
     }
 });
