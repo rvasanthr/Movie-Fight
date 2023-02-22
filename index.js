@@ -21,6 +21,9 @@ createAutoComplete({
     onOptionSelect: (movie) => {
         // Passes IMDB movieID to helper Fn for getting movie details
         onMovieSelect(movie.imdbID);
+    },
+    inputValue: (movie) => {
+        return movie.Title;
     }
 });
 // Helper Fn for retrieving the selected movie's details

@@ -1,4 +1,4 @@
-const createAutoComplete = ({ root, renderOption, onOptionSelect }) => {
+const createAutoComplete = ({ root, renderOption, onOptionSelect, inputValue }) => {
     // HTML for root
     root.innerHTML = `
     <label><b>Search For a Movie</b></label>
@@ -40,7 +40,7 @@ const createAutoComplete = ({ root, renderOption, onOptionSelect }) => {
                 // Hide dropdown when user clicks on an option
                 dropdown.classList.remove('is-active');
                 // Get Movie title on to the search box
-                search.value = movie.Title;
+                search.value = inputValue(movie);
                 // Pass movie object to Fn handling Option select action
                 onOptionSelect(movie);
             });
