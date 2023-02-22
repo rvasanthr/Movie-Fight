@@ -1,6 +1,5 @@
-// Invoking Auto Complete through the Config Object {destructured}
-createAutoComplete({
-    root: document.querySelector('#auto-complete'),
+// Auto Complete Config
+const autoCompleteConfig = {
     renderOption: (movie) => {
         // Checks for N/A (no image) in poster URI and remedies it
         const imageURL = movie.Poster === 'N/A' ? '' : movie.Poster;
@@ -25,6 +24,17 @@ createAutoComplete({
         }
         return response.data.Search;
     }
+}
+// Invoking Auto Complete through the Config Object {destructured}
+// Left search
+createAutoComplete({
+    root: document.querySelector('#left-auto-complete'),
+    ...autoCompleteConfig
+});
+// Right search
+createAutoComplete({
+    root: document.querySelector('#right-auto-complete'),
+    ...autoCompleteConfig
 });
 // Helper Fn for retrieving the selected movie's details
 const onMovieSelect = async (movieID) => {
