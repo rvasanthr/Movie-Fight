@@ -2,7 +2,7 @@
 const createAutoComplete = ({ root, renderOption, onOptionSelect, inputValue, fetchAPIData }) => {
     // HTML for root
     root.innerHTML = `
-    <label><b>Search For a Movie</b></label>
+    <label><b>Search</b></label>
     <input class="input">
     <div class="dropdown">
         <div class="dropdown-menu">
@@ -17,11 +17,11 @@ const createAutoComplete = ({ root, renderOption, onOptionSelect, inputValue, fe
     const search = root.querySelector('input');
     // Search Management Function
     const processAPISearch = async (event) => {
-        const apiData = await fetchAPIData(event.target.value);
+        const items = await fetchAPIData(event.target.value);
         // Reset resultsWrapper with each new search
         resultsWrapper.innerHTML = ``;
-        // If there are no movies returned, hide dropdown and exit function
-        if (!apiData.length) {
+        // If there are no items returned, hide dropdown and exit function
+        if (!items.length) {
             // Per our design returns an empty array when no match found
             // console.log(apiData);
             dropdown.classList.remove('is-active');
@@ -30,22 +30,22 @@ const createAutoComplete = ({ root, renderOption, onOptionSelect, inputValue, fe
         // Bulma class that actively displays the drowdown
         dropdown.classList.add('is-active');
         // Rendering section
-        for (let movie of apiData) {
+        for (let item of items) {
             // Bulma display element for this dropdown
-            const movieOption = document.createElement('a');
+            const inputOption = document.createElement('a');
             // Bulma class addition
-            movieOption.classList.add('dropdown-item');
-            movieOption.innerHTML = renderOption(movie);
+            inputOption.classList.add('dropdown-item');
+            inputOption.innerHTML = renderOption(item);
             // Event listener trigger on a element
-            movieOption.addEventListener('click', event => {
+            inputOption.addEventListener('click', event => {
                 // Hide dropdown when user clicks on an option
                 dropdown.classList.remove('is-active');
-                // Get Movie title on to the search box
-                search.value = inputValue(movie);
-                // Pass movie object to Fn handling Option select action
-                onOptionSelect(movie);
+                // Get item title on to the search box
+                search.value = inputValue(item);
+                // Pass item object to Fn handling Option select action
+                onOptionSelect(item);
             });
-            resultsWrapper.appendChild(movieOption);
+            resultsWrapper.appendChild(inputOption);
         }
     }
     // Event Listeners
