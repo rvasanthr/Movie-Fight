@@ -1,3 +1,49 @@
+// Helper Fn for rendering the selected movie's details
+const movieInfoTemplate = movieInfo => {
+    return `
+    <article class="media">
+        <figure class="media-left">
+            <p class="image">
+                <img src="${movieInfo.Poster}" alt="">
+            </p>
+        </figure>
+        <div class="media-content">
+            <div class="content">
+                <h1>${movieInfo.Title}</h1>
+                <h4>${movieInfo.Genre}</h4>
+                <p>${movieInfo.Plot}</p>
+            </div>
+        </div>
+    </article>
+    <article class="notification is-primary">
+        <p class="title">${movieInfo.Awards}</p>
+        <p class="subtitle">Awards</p>
+    </article>
+    <article class="notification is-primary">
+        <p class="title">${movieInfo.BoxOffice}</p>
+        <p class="subtitle">Box Office</p>
+    </article>
+    <article class="notification is-primary">
+        <p class="title">${movieInfo.Metascore}</p>
+        <p class="subtitle">Metascore</p>
+    </article>
+    </article><article class="notification is-primary">
+        <p class="title">${movieInfo.imdbRating}</p>
+        <p class="subtitle">IMDB Rating</p>
+    </article>
+    </article><article class="notification is-primary">
+        <p class="title">${movieInfo.imdbVotes}</p>
+        <p class="subtitle">IMDB Votes</p>
+    </article>`;
+}
+// Helper Fn for retrieving the selected movie's details
+const onMovieSelect = async (movieID, summaryElement) => {
+    const response = await axios.get('http://www.omdbapi.com/', {
+        params: { apikey: 'd9835cc5', i: movieID }
+    });
+    // console.log(response.data);
+    summaryElement.innerHTML = movieInfoTemplate(response.data);
+}
 // Auto Complete Config
 const autoCompleteConfig = {
     renderOption: (movie) => {
@@ -44,49 +90,3 @@ createAutoComplete({
         onMovieSelect(movie.imdbID, document.querySelector('#right-summary'));
     }
 });
-// Helper Fn for retrieving the selected movie's details
-const onMovieSelect = async (movieID, summaryElement) => {
-    const response = await axios.get('http://www.omdbapi.com/', {
-        params: { apikey: 'd9835cc5', i: movieID }
-    });
-    // console.log(response.data);
-    summaryElement.innerHTML = movieInfoTemplate(response.data);
-}
-// Helper Fn for rendering the selected movie's details
-const movieInfoTemplate = movieInfo => {
-    return `
-    <article class="media">
-        <figure class="media-left">
-            <p class="image">
-                <img src="${movieInfo.Poster}" alt="">
-            </p>
-        </figure>
-        <div class="media-content">
-            <div class="content">
-                <h1>${movieInfo.Title}</h1>
-                <h4>${movieInfo.Genre}</h4>
-                <p>${movieInfo.Plot}</p>
-            </div>
-        </div>
-    </article>
-    <article class="notification is-primary">
-        <p class="title">${movieInfo.Awards}</p>
-        <p class="subtitle">Awards</p>
-    </article>
-    <article class="notification is-primary">
-        <p class="title">${movieInfo.BoxOffice}</p>
-        <p class="subtitle">Box Office</p>
-    </article>
-    <article class="notification is-primary">
-        <p class="title">${movieInfo.Metascore}</p>
-        <p class="subtitle">Metascore</p>
-    </article>
-    </article><article class="notification is-primary">
-        <p class="title">${movieInfo.imdbRating}</p>
-        <p class="subtitle">IMDB Rating</p>
-    </article>
-    </article><article class="notification is-primary">
-        <p class="title">${movieInfo.imdbVotes}</p>
-        <p class="subtitle">IMDB Votes</p>
-    </article>`;
-}
