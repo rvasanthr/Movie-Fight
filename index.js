@@ -5,12 +5,6 @@ const autoCompleteConfig = {
         const imageURL = movie.Poster === 'N/A' ? '' : movie.Poster;
         return `<img src="${imageURL}">${movie.Title} (${movie.Year})`;
     },
-    onOptionSelect: (movie) => {
-        // Hide the tutorial section
-        document.querySelector('.tutorial').classList.add('is-hidden');
-        // Passes IMDB movieID to helper Fn for getting movie details
-        onMovieSelect(movie.imdbID);
-    },
     inputValue: (movie) => {
         return movie.Title;
     },
@@ -31,20 +25,32 @@ const autoCompleteConfig = {
 // Left search
 createAutoComplete({
     root: document.querySelector('#left-auto-complete'),
-    ...autoCompleteConfig
+    ...autoCompleteConfig,
+    onOptionSelect: (movie) => {
+        // Hide the tutorial section
+        document.querySelector('.tutorial').classList.add('is-hidden');
+        // Passes IMDB movieID to helper Fn for getting movie details
+        onMovieSelect(movie.imdbID, document.querySelector('#left-summary'));
+    }
 });
 // Right search
 createAutoComplete({
     root: document.querySelector('#right-auto-complete'),
-    ...autoCompleteConfig
+    ...autoCompleteConfig,
+    onOptionSelect: (movie) => {
+        // Hide the tutorial section
+        document.querySelector('.tutorial').classList.add('is-hidden');
+        // Passes IMDB movieID to helper Fn for getting movie details
+        onMovieSelect(movie.imdbID, document.querySelector('#right-summary'));
+    }
 });
 // Helper Fn for retrieving the selected movie's details
-const onMovieSelect = async (movieID) => {
+const onMovieSelect = async (movieID, summaryElement) => {
     const response = await axios.get('http://www.omdbapi.com/', {
         params: { apikey: 'd9835cc5', i: movieID }
     });
     // console.log(response.data);
-    document.querySelector('#summary').innerHTML = movieInfoTemplate(response.data);
+    summaryElement.innerHTML = movieInfoTemplate(response.data);
 }
 // Helper Fn for rendering the selected movie's details
 const movieInfoTemplate = movieInfo => {
