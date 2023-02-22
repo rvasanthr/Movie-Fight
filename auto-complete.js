@@ -1,4 +1,5 @@
-const createAutoComplete = ({ root, renderOption, onOptionSelect, inputValue }) => {
+// Config object Parameter {destructured}
+const createAutoComplete = ({ root, renderOption, onOptionSelect, inputValue, fetchAPIData }) => {
     // HTML for root
     root.innerHTML = `
     <label><b>Search For a Movie</b></label>
