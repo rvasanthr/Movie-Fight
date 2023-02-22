@@ -6,6 +6,8 @@ const autoCompleteConfig = {
         return `<img src="${imageURL}">${movie.Title} (${movie.Year})`;
     },
     onOptionSelect: (movie) => {
+        // Hide the tutorial section
+        document.querySelector('.tutorial').classList.add('is-hidden');
         // Passes IMDB movieID to helper Fn for getting movie details
         onMovieSelect(movie.imdbID);
     },
