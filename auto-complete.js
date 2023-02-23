@@ -15,7 +15,7 @@ const createAutoComplete = ({ root, renderOption, onOptionSelect, inputValue, fe
     const resultsWrapper = root.querySelector('.results');
     // Dom object for input text
     const search = root.querySelector('input');
-    // Search Management Function
+    // SEARCH API Management Function
     const processAPISearch = async (event) => {
         const items = await fetchAPIData(event.target.value);
         // Reset resultsWrapper with each new search
@@ -23,7 +23,6 @@ const createAutoComplete = ({ root, renderOption, onOptionSelect, inputValue, fe
         // If there are no items returned, hide dropdown and exit function
         if (!items.length) {
             // Per our design returns an empty array when no match found
-            // console.log(apiData);
             dropdown.classList.remove('is-active');
             return;
         }
@@ -53,7 +52,6 @@ const createAutoComplete = ({ root, renderOption, onOptionSelect, inputValue, fe
     search.addEventListener('input', debounce(processAPISearch, 500));
     // For body
     document.addEventListener('click', event => {
-        // console.log(event.target);
         if (!root.contains(event.target)) {
             // Bulma class that stops display of drowdown
             dropdown.classList.remove('is-active');
