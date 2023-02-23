@@ -15,7 +15,7 @@ const movieInfoTemplate = movieInfo => {
     const metascore = parseInt(movieInfo.Metascore.replace(/,/g, ''));
     const imdbRating = parseFloat(movieInfo.imdbRating);
     const imdbVotes = parseInt(movieInfo.imdbVotes.replace(/,/g, ''));
-    console.log(`Accolades: ${accolades}, Box Office: ${boxOffice}, Metascore: ${metascore}, IMDB Rating: ${imdbRating}, IMDB Votes: ${imdbVotes}`);
+    // console.log(`Accolades: ${accolades}, Box Office: ${boxOffice}, Metascore: ${metascore}, IMDB Rating: ${imdbRating}, IMDB Votes: ${imdbVotes}`);
     return `
     <article class="media">
         <figure class="media-left">
@@ -54,7 +54,32 @@ const movieInfoTemplate = movieInfo => {
 }
 // Helper Fn for Movie Data Comparison
 const runComparison = () => {
-    console.log('Actual comparison code goes here.');
+    const leftStats = document.querySelectorAll('#left-summary>.notification');
+    const rightStats = document.querySelectorAll('#right-summary>.notification');
+    // Individual comparison and assigining appropriate classes
+    leftStats.forEach((leftStat, i) => {
+        // Getting the respective right side dataset value
+        rightStat = rightStats[i]
+        rightValue = parseFloat(rightStat.dataset.value);
+        leftValue = parseFloat(leftStat.dataset.value);
+        if (leftValue > rightValue) {
+            // Only if left data is greater than right data
+            leftStat.classList.add('is-success');
+            leftStat.classList.remove('is-primary');
+            rightStat.classList.remove('is-primary');
+        } else if (rightValue > leftValue) {
+            // Only if right data is greater than left data
+            rightStat.classList.add('is-success');
+            rightStat.classList.remove('is-primary');
+            leftStat.classList.remove('is-primary');
+        } else {
+            // All other cases, leave it dull the colour
+            leftStat.classList.add('is-warning');
+            rightStat.classList.add('is-warning');
+            leftStat.classList.remove('is-primary');
+            rightStat.classList.remove('is-primary');
+        }
+    });
 }
 // Helper Fn for retrieving the selected movie's details
 // Variables to represent two sides for storing movie info for comparing
